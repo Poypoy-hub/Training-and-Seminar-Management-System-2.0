@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barangay Pinagbuhatan - Training & Seminar Management System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            sidebar: '#081427',
+                            sidebarHover: '#0F2342',
+                            blue: '#0084FF',
+                            blueHover: '#006CFA',
+                            bg: '#F3F5F8',
+                            card: '#FFFFFF',
+                            textDark: '#1E293B',
+                            textMuted: '#64748B',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F3F5F8;
+            color: #1E293B;
+        }
+        
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F1F5F9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #CBD5E1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94A3B8;
+        }
+
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #printArea, #printArea * {
+                visibility: visible;
+            }
+            #printArea {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+            }
+            .no-print {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-brand-bg text-brand-textDark antialiased min-h-screen flex flex-col justify-between">
+
+
+    <div id="loginView" class="fixed inset-0 z-50 flex flex-col md:flex-row bg-white">
+
+        <div class="relative md:w-1/2 bg-slate-900 flex flex-col justify-between p-8 md:p-12 text-white overflow-hidden">
+            <div class="absolute inset-0 bg-cover bg-center opacity-40" style="background-image: url('https://images.unsplash.com/photo-1577495508048-b635879837f1?auto=format&fit=crop&w=1200&q=80');"></div>
+            <div class="relative z-10 flex items-center space-x-3">
+                <div class="w-12 h-12 rounded-full bg-white/20 backdrop-blur border border-white/30 flex items-center justify-center font-bold text-xl">
+                    <i class="fa-solid fa-building-columns text-white"></i>
+                </div>
+                <div>
+                    <h2 class="font-bold text-lg leading-tight">Barangay Pinagbuhatan</h2>
+                    <p class="text-xs text-blue-200">Pasig City</p>
+                </div>
+            </div>
+            
+            <div class="relative z-10 my-auto py-12">
+                <h1 class="text-3xl md:text-5xl font-extrabold leading-tight tracking-tight mb-4">
+                    Barangay Pinagbuhatan Training and Seminar Management
+                </h1>
+                <p class="text-slate-300 text-sm md:text-base max-w-md font-normal">
+                    Plan programs, register residents, and track attendance all in one centralized portal.
+                </p>
+            </div>
+
+            <div class="relative z-10 text-xs text-slate-400">
+                &copy; 2026 Barangay Pinagbuhatan, Pasig City – Management Portal
+            </div>
+        </div>
+
+        <div class="md:w-1/2 flex items-center justify-center p-6 md:p-16 bg-white">
+            <div class="w-full max-w-md space-y-6">
+                <div>
+                    <span class="text-xs font-bold tracking-wider text-brand-blue uppercase">Staff Portal</span>
+                    <h2 class="text-3xl font-extrabold text-slate-900 mt-1">Welcome back</h2>
+                    <p class="text-xs text-slate-500 mt-1">Sign in to the Training and Seminar Management System.</p>
+                </div>
+
+                <form id="loginForm" onsubmit="handleLogin(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">Username</label>
+                        <input type="text" id="loginUsername" required value="admin_juan" placeholder="Enter your username" class="w-full px-4 py-2.5 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue/50 focus:border-brand-blue transition">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">Password</label>
+                        <input type="password" id="loginPassword" required value="password123" placeholder="Enter your password" class="w-full px-4 py-2.5 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue/50 focus:border-brand-blue transition">
+                    </div>
+
+                    <div class="flex items-center justify-between text-xs">
+                        <label class="flex items-center text-slate-600 cursor-pointer">
+                            <input type="checkbox" checked class="rounded border-slate-300 text-brand-blue focus:ring-brand-blue mr-2">
+                            Remember me
+                        </label>
+                        <a href="#" onclick="alert('Please contact the Barangay IT Administrator to reset your password.')" class="text-brand-blue hover:underline">Forgot Password?</a>
+                    </div>
+
+                    <button type="submit" class="w-full bg-brand-blue hover:bg-brand-blueHover text-white font-medium py-3 rounded-lg text-sm shadow-md transition flex items-center justify-center space-x-2">
+                        <span>Sign in to portal</span>
+                        <i class="fa-solid fa-arrow-right text-xs"></i>
+                    </button>
+                </form>
+
+                <div class="pt-4 border-t border-slate-100 text-center text-xs text-slate-400">
+                    Need support? Contact admin@pinagbuhatan.gov.ph
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="mainApp" class="hidden min-h-screen flex flex-col md:flex-row">
+        
+        <aside class="w-full md:w-64 bg-brand-sidebar text-slate-300 flex-shrink-0 flex flex-col justify-between border-r border-slate-800">
+            <div>
+
+                <div class="p-6 border-b border-slate-800/80 flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-full bg-blue-600/30 border border-blue-400/30 flex items-center justify-center text-blue-400 font-bold">
+                        <i class="fa-solid fa-landmark"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xs font-bold uppercase tracking-wider text-white">Pinagbuhatan</h1>
+                        <p class="text-[10px] text-slate-400">Barangay Management Portal</p>
+                    </div>
+                </div>
+
+                <div class="px-4 py-6">
+                    <div class="text-[10px] font-bold uppercase text-slate-500 tracking-wider mb-3 px-3">Main Menu</div>
+                    <nav class="space-y-1">
+                        <button onclick="switchTab('dashboard')" id="nav-dashboard" class="nav-btn w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-xs font-medium transition text-white bg-brand-blue">
+                            <i class="fa-solid fa-chart-pie w-5 text-center"></i>
+                            <span>Dashboard</span>
+                        </button>
+                        <button onclick="switchTab('programs')" id="nav-programs" class="nav-btn w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-xs font-medium transition text-slate-400 hover:bg-brand-sidebarHover hover:text-white">
+                            <i class="fa-solid fa-calendar-check w-5 text-center"></i>
+                            <span>Training Programs</span>
+                        </button>
+                        <button onclick="switchTab('residents')" id="nav-residents" class="nav-btn w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-xs font-medium transition text-slate-400 hover:bg-brand-sidebarHover hover:text-white">
+                            <i class="fa-solid fa-users w-5 text-center"></i>
+                            <span>Residents / Participants</span>
+                        </button>
+                        <button onclick="switchTab('attendance')" id="nav-attendance" class="nav-btn w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-xs font-medium transition text-slate-400 hover:bg-brand-sidebarHover hover:text-white">
+                            <i class="fa-solid fa-clipboard-user w-5 text-center"></i>
+                            <span>Attendance</span>
+                        </button>
+                        <button onclick="switchTab('reports')" id="nav-reports" class="nav-btn w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-xs font-medium transition text-slate-400 hover:bg-brand-sidebarHover hover:text-white">
+                            <i class="fa-solid fa-file-lines w-5 text-center"></i>
+                            <span>Reports</span>
+                        </button>
+                        <button onclick="switchTab('settings')" id="nav-settings" class="nav-btn w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-xs font-medium transition text-slate-400 hover:bg-brand-sidebarHover hover:text-white">
+                            <i class="fa-solid fa-gear w-5 text-center"></i>
+                            <span>Settings</span>
+                        </button>
+                    </nav>
+                </div>
+            </div>
+
+            <div class="p-4 border-t border-slate-800/80 bg-slate-900/40">
+                <div class="flex items-center space-x-3 mb-3">
+                    <div class="w-9 h-9 rounded-full bg-brand-blue flex items-center justify-center text-white font-bold text-xs shadow">
+                        JD
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-xs font-semibold text-white truncate">Juan Dela Cruz</p>
+                        <p class="text-[10px] text-slate-400 truncate">Administrator</p>
+                    </div>
+                </div>
+                <button onclick="handleLogout()" class="w-full flex items-center justify-center space-x-2 py-2 px-3 text-xs text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition border border-slate-700/50">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span>Log Out</span>
+                </button>
+            </div>
+        </aside>
+
+        <main class="flex-1 flex flex-col min-w-0 overflow-y-auto">
+            
+
+            <header class="bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between sticky top-0 z-20">
+                <div>
+                    <p class="text-[11px] text-slate-400 font-medium">Barangay Pinagbuhatan</p>
+                    <h2 id="headerPageTitle" class="text-lg font-bold text-slate-800">Dashboard</h2>
+                </div>
+
+                <div class="flex items-center space-x-4">
+                    <button onclick="alert('You have no new notifications.')" class="p-2 text-slate-400 hover:text-slate-600 rounded-full hover:bg-slate-100 transition relative">
+                        <i class="fa-regular fa-bell"></i>
+                        <span class="absolute top-1.5 right-1.5 w-2 h-2 bg-blue-500 rounded-full"></span>
+                    </button>
+                    <div class="h-6 w-px bg-slate-200"></div>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-8 h-8 rounded-full bg-brand-blue flex items-center justify-center text-white font-semibold text-xs">
+                            JD
+                        </div>
+                        <div class="hidden sm:block text-left">
+                            <p class="text-xs font-bold text-slate-800 leading-none">Juan Dela Cruz</p>
+                            <p class="text-[10px] text-slate-400">Administrator</p>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+
+            <div class="p-6 max-w-7xl w-full mx-auto space-y-6">
+
+
+                <div id="tab-dashboard" class="tab-content space-y-6">
+                    <div>
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-brand-blue">Overview</span>
+                        <h1 class="text-2xl font-bold text-slate-900">Good morning, Juan!</h1>
+                        <p class="text-xs text-slate-500">Here's what's happening in your barangay training programs.</p>
+                    </div>
+
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+                            <span class="text-xs font-semibold text-slate-600">Total Training Programs</span>
+                            <div class="my-3">
+                                <span class="text-3xl font-extrabold text-slate-900" id="dashTotalPrograms">7</span>
+                            </div>
+                            <span class="text-[11px] text-slate-400">Across all schedules</span>
+                        </div>
+                        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+                            <span class="text-xs font-semibold text-slate-600">Registered Residents</span>
+                            <div class="my-3">
+                                <span class="text-3xl font-extrabold text-slate-900" id="dashTotalResidents">6</span>
+                            </div>
+                            <span class="text-[11px] text-slate-400">In the participant registry</span>
+                        </div>
+                        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+                            <span class="text-xs font-semibold text-slate-600">Upcoming Sessions</span>
+                            <div class="my-3">
+                                <span class="text-3xl font-extrabold text-slate-900" id="dashUpcomingSessions">5</span>
+                            </div>
+                            <span class="text-[11px] text-slate-400">Scheduled activities</span>
+                        </div>
+                        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+                            <span class="text-xs font-semibold text-slate-600">Total Training Programs</span>
+                            <div class="my-3">
+                                <span class="text-3xl font-extrabold text-slate-900">50%</span>
+                            </div>
+                            <span class="text-[11px] text-slate-400">Attendance Rate</span>
+                        </div>
+                    </div>
+
+
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+                        <div class="lg:col-span-2 bg-white rounded-xl border border-slate-200 shadow-sm p-5 space-y-4">
+                            <div>
+                                <h3 class="text-base font-bold text-slate-900">Upcoming Training & Seminars</h3>
+                                <p class="text-xs text-slate-500">Next scheduled community activities</p>
+                            </div>
+
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left text-xs">
+                                    <thead class="bg-slate-100 text-slate-500 font-semibold rounded-lg">
+                                        <tr>
+                                            <th class="p-3 rounded-l-md">Program</th>
+                                            <th class="p-3">Date & Time</th>
+                                            <th class="p-3">Venue</th>
+                                            <th class="p-3 text-right rounded-r-md">Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="dashUpcomingTable" class="divide-y divide-slate-100">
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-5 flex flex-col justify-between space-y-4">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h3 class="text-base font-bold text-slate-900">Attendance Overview</h3>
+                                    <p class="text-xs text-slate-500">Last six sessions</p>
+                                </div>
+                                <span class="text-xl font-extrabold text-slate-800">86%</span>
+                            </div>
+
+                            <div class="h-44 flex items-end justify-between pt-6 px-2 border-b border-slate-100 pb-2 space-x-2">
+                                <div class="flex-1 flex flex-col items-center gap-1 h-full justify-end">
+                                    <div class="w-full bg-brand-blue rounded-t" style="height: 60%;"></div>
+                                    <span class="text-[10px] text-slate-400">Jan</span>
+                                </div>
+                                <div class="flex-1 flex flex-col items-center gap-1 h-full justify-end">
+                                    <div class="w-full bg-brand-blue rounded-t" style="height: 85%;"></div>
+                                    <span class="text-[10px] text-slate-400">Feb</span>
+                                </div>
+                                <div class="flex-1 flex flex-col items-center gap-1 h-full justify-end">
+                                    <div class="w-full bg-brand-blue rounded-t" style="height: 70%;"></div>
+                                    <span class="text-[10px] text-slate-400">Mar</span>
+                                </div>
+                                <div class="flex-1 flex flex-col items-center gap-1 h-full justify-end">
+                                    <div class="w-full bg-brand-blue rounded-t" style="height: 95%;"></div>
+                                    <span class="text-[10px] text-slate-400">Apr</span>
+                                </div>
+                                <div class="flex-1 flex flex-col items-center gap-1 h-full justify-end">
+                                    <div class="w-full bg-brand-blue rounded-t" style="height: 78%;"></div>
+                                    <span class="text-[10px] text-slate-400">May</span>
+                                </div>
+                                <div class="flex-1 flex flex-col items-center gap-1 h-full justify-end">
+                                    <div class="w-full bg-brand-blue rounded-t" style="height: 82%;"></div>
+                                    <span class="text-[10px] text-slate-400">Jun</span>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center text-[11px] text-slate-500 space-x-2">
+                                <span class="w-2.5 h-2.5 rounded-sm bg-brand-blue inline-block"></span>
+                                <span>Present</span>
+                                <span class="text-emerald-600 font-medium ml-auto">+4.2% from last quarter</span>
+                            </div>
+                        </div>
+                    </div>
+
+   
+                    <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-5 space-y-4">
+                        <div>
+                            <h3 class="text-base font-bold text-slate-900">Recent Activity</h3>
+                            <p class="text-xs text-slate-500">Latest updates in the system</p>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="bg-teal-50 border border-teal-100 p-4 rounded-xl space-y-2">
+                                <h4 class="text-xs font-bold text-teal-900">New participant registered</h4>
+                                <p class="text-xs text-teal-800">Ana Mae Dela Cruz joined First Aid and BLS</p>
+                                <p class="text-[10px] text-teal-600">12 minutes ago</p>
+                            </div>
+                            <div class="bg-emerald-50 border border-emerald-100 p-4 rounded-xl space-y-2">
+                                <h4 class="text-xs font-bold text-emerald-900">Attendance completed</h4>
+                                <p class="text-xs text-emerald-800">Earthquake drill reached 92% attendance</p>
+                                <p class="text-[10px] text-emerald-600">Yesterday, 4:15 PM</p>
+                            </div>
+                            <div class="bg-sky-50 border border-sky-100 p-4 rounded-xl space-y-2">
+                                <h4 class="text-xs font-bold text-sky-900">Program schedule updated</h4>
+                                <p class="text-xs text-sky-800">Fire Safety moved to San Sebastian Court</p>
+                                <p class="text-[10px] text-sky-600">Mar 18, 2026</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="tab-programs" class="tab-content space-y-6 hidden">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <div>
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-brand-blue">Program Management</span>
+                            <h1 class="text-2xl font-bold text-slate-900">Training Programs</h1>
+                            <p class="text-xs text-slate-500">Manage community training and seminar records.</p>
+                        </div>
+                        <button onclick="openAddProgramModal()" class="bg-brand-blue hover:bg-brand-blueHover text-white px-4 py-2.5 rounded-lg text-xs font-semibold shadow transition flex items-center space-x-2 w-fit">
+                            <i class="fa-solid fa-plus"></i>
+                            <span>Add program</span>
+                        </button>
+                    </div>
+
+                    <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-5 space-y-4">
+
+                        <div class="flex flex-col sm:flex-row gap-3 justify-between">
+                            <div class="relative flex-1 max-w-md">
+                                <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3 text-slate-400 text-xs"></i>
+                                <input type="text" id="searchProgramInput" onkeyup="renderProgramsTable()" placeholder="Search programs, speaker, venue..." class="w-full pl-9 pr-4 py-2 rounded-lg border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-brand-blue/30">
+                            </div>
+                            <button onclick="alert('Filters applied.')" class="flex items-center space-x-2 px-4 py-2 border border-slate-200 rounded-lg text-xs font-medium text-slate-700 hover:bg-slate-50">
+                                <i class="fa-solid fa-sliders"></i>
+                                <span>Filter</span>
+                            </button>
+                        </div>
+
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-xs">
+                                <thead class="bg-slate-100 text-slate-600 font-semibold">
+                                    <tr>
+                                        <th class="p-3">Program ID</th>
+                                        <th class="p-3">Training / Seminar Title</th>
+                                        <th class="p-3">Date & Time</th>
+                                        <th class="p-3">Venue</th>
+                                        <th class="p-3">Speaker / Trainer</th>
+                                        <th class="p-3">Status</th>
+                                        <th class="p-3 text-center">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="programsTableBody" class="divide-y divide-slate-100">
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="text-[11px] text-slate-400 pt-2" id="programsCountLabel">
+                            Showing records
+                        </div>
+                    </div>
+                </div>
+
+                <div id="tab-residents" class="tab-content space-y-6 hidden">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <div>
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-brand-blue">Resident Registry</span>
+                            <h1 class="text-2xl font-bold text-slate-900">Residents / Participants</h1>
+                            <p class="text-xs text-slate-500">Maintain resident information and training registrations.</p>
+                        </div>
+                        <button onclick="alert('Feature to register new resident opened.')" class="bg-brand-blue hover:bg-brand-blueHover text-white px-4 py-2.5 rounded-lg text-xs font-semibold shadow transition flex items-center space-x-2 w-fit">
+                            <i class="fa-solid fa-plus"></i>
+                            <span>Add resident</span>
+                        </button>
+                    </div>
+
+                    <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-5 space-y-4">
+ 
+                        <div class="flex flex-col sm:flex-row gap-3 justify-between">
+                            <div class="relative flex-1 max-w-md">
+                                <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3 text-slate-400 text-xs"></i>
+                                <input type="text" id="searchResidentInput" onkeyup="renderResidentsTable()" placeholder="Search name, ID, sitio, program..." class="w-full pl-9 pr-4 py-2 rounded-lg border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-brand-blue/30">
+                            </div>
+                            <button onclick="alert('Filters applied.')" class="flex items-center space-x-2 px-4 py-2 border border-slate-200 rounded-lg text-xs font-medium text-slate-700 hover:bg-slate-50">
+                                <i class="fa-solid fa-sliders"></i>
+                                <span>Filter</span>
+                            </button>
+                        </div>
+
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-xs">
+                                <thead class="bg-slate-100 text-slate-600 font-semibold">
+                                    <tr>
+                                        <th class="p-3">Participant ID</th>
+                                        <th class="p-3">Full Name</th>
+                                        <th class="p-3">Sitio / Purok</th>
+                                        <th class="p-3">Age Group</th>
+                                        <th class="p-3">Gender</th>
+                                        <th class="p-3">Contact Number</th>
+                                        <th class="p-3">Registered Program</th>
+                                        <th class="p-3 text-center">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="residentsTableBody" class="divide-y divide-slate-100">
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="text-[11px] text-slate-400 pt-2" id="residentsCountLabel">
+                            Showing records
+                        </div>
+                    </div>
+                </div>
+
+                <div id="tab-attendance" class="tab-content space-y-6 hidden">
+                    <div>
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-brand-blue">Session Monitoring</span>
+                        <h1 class="text-2xl font-bold text-slate-900">Attendance Tracking</h1>
+                        <p class="text-xs text-slate-500">Record and update participant attendance per training program.</p>
+                    </div>
+
+                    <div class="bg-brand-sidebar text-white p-6 rounded-xl shadow-sm space-y-4">
+                        <label class="block text-xs text-slate-300 font-medium">Select Training Program</label>
+                        <select id="attendanceProgramSelect" onchange="updateAttendanceView()" class="w-full md:w-1/2 px-4 py-2.5 rounded-lg bg-slate-800 border border-slate-700 text-xs text-white focus:outline-none focus:ring-2 focus:ring-brand-blue">
+
+                        </select>
+                        <div class="flex flex-wrap gap-6 text-xs text-slate-300 pt-2">
+                            <div class="flex items-center space-x-2">
+                                <i class="fa-regular fa-calendar text-brand-blue"></i>
+                                <span id="attProgramDate">Apr 18, 2026</span>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <i class="fa-solid fa-location-dot text-brand-blue"></i>
+                                <span id="attProgramVenue">Barangay Hall Multi-Purpose Room</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex items-center space-x-4">
+                            <div class="w-12 h-12 rounded-lg bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">
+                                <i class="fa-solid fa-users"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs text-slate-500">Total Participants</p>
+                                <p class="text-2xl font-bold text-slate-900" id="attTotalCount">2</p>
+                                <p class="text-[10px] text-slate-400">For selected program</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex items-center space-x-4">
+                            <div class="w-12 h-12 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold text-lg">
+                                <i class="fa-solid fa-check"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs text-slate-500">Present</p>
+                                <p class="text-2xl font-bold text-slate-900" id="attPresentCount">2</p>
+                                <p class="text-[10px] text-slate-400">For selected program</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex items-center space-x-4">
+                            <div class="w-12 h-12 rounded-lg bg-red-100 text-red-600 flex items-center justify-center font-bold text-lg">
+                                <i class="fa-solid fa-xmark"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs text-slate-500">Absent</p>
+                                <p class="text-2xl font-bold text-slate-900" id="attAbsentCount">0</p>
+                                <p class="text-[10px] text-slate-400">For selected program</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex items-center space-x-4">
+                            <div class="w-12 h-12 rounded-lg bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">
+                                <i class="fa-solid fa-chart-line"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs text-slate-500">Attendance Rate</p>
+                                <p class="text-2xl font-bold text-slate-900" id="attRate">100%</p>
+                                <p class="text-[10px] text-slate-400">For selected program</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-5 space-y-4">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                            <div>
+                                <h3 class="text-base font-bold text-slate-900">Participant Attendance</h3>
+                                <p class="text-xs text-slate-500" id="attRegisteredSub">2 registered residents</p>
+                            </div>
+
+                            <div class="relative w-full sm:w-64">
+                                <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3 text-slate-400 text-xs"></i>
+                                <input type="text" id="searchAttInput" onkeyup="updateAttendanceView()" placeholder="Search name, ID, sitio..." class="w-full pl-9 pr-4 py-2 rounded-lg border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-brand-blue/30">
+                            </div>
+                        </div>
+
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-xs">
+                                <thead class="bg-slate-100 text-slate-600 font-semibold">
+                                    <tr>
+                                        <th class="p-3">Participant</th>
+                                        <th class="p-3">Sitio / Purok</th>
+                                        <th class="p-3">Contact Number</th>
+                                        <th class="p-3">Attendance Status</th>
+                                        <th class="p-3 text-center">Mark Attendance</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="attendanceTableBody" class="divide-y divide-slate-100">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="tab-reports" class="tab-content space-y-6 hidden">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <div>
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-brand-blue">Documents & Analytics</span>
+                            <h1 class="text-2xl font-bold text-slate-900">Reports</h1>
+                            <p class="text-xs text-slate-500">Generate printable participant lists and attendance summaries.</p>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <button onclick="window.print()" class="px-4 py-2 border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 rounded-lg text-xs font-semibold shadow-sm transition flex items-center space-x-2">
+                                <i class="fa-solid fa-print"></i>
+                                <span>Print</span>
+                            </button>
+                            <button onclick="exportCSV()" class="bg-brand-blue hover:bg-brand-blueHover text-white px-4 py-2 rounded-lg text-xs font-semibold shadow transition flex items-center space-x-2">
+                                <i class="fa-solid fa-download"></i>
+                                <span>Export CSV</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-5 space-y-4 no-print">
+                        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700 mb-1">Select Program</label>
+                                <select id="reportProgramSelect" class="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-brand-blue">
+                                    <option value="ALL">All Training Programs</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700 mb-1">Date From</label>
+                                <div class="relative">
+                                    <input type="date" value="2026-03-01" class="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-brand-blue">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700 mb-1">Date To</label>
+                                <div class="relative">
+                                    <input type="date" value="2026-06-30" class="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-brand-blue">
+                                </div>
+                            </div>
+
+                            <div>
+                                <button onclick="generateReport()" class="w-full bg-brand-blue hover:bg-brand-blueHover text-white py-2 rounded-lg text-xs font-semibold transition">
+                                    Generate Report
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="printArea" class="bg-white rounded-xl border border-slate-200 shadow-sm p-6 space-y-6">
+                        <div class="flex items-center justify-between border-b border-slate-200 pb-4">
+                            <div class="flex items-center space-x-4">
+                                <div class="w-12 h-12 rounded-full border border-slate-300 flex items-center justify-center font-bold text-brand-blue">
+                                    <i class="fa-solid fa-landmark text-xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-sm font-bold text-slate-900 uppercase">Barangay Pinagbuhatan, Pasig City</h3>
+                                    <h2 class="text-lg font-extrabold text-slate-900" id="reportTitle">Training Program Participant List</h2>
+                                    <p class="text-xs text-slate-500">Generated sample report &bull; March–June 2026</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <span class="bg-slate-100 text-slate-600 px-3 py-1 rounded-full text-xs font-semibold" id="reportRecordCount">6 Records</span>
+                            </div>
+                        </div>
+
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-xs">
+                                <thead class="bg-slate-100 text-slate-600 font-semibold">
+                                    <tr>
+                                        <th class="p-3">Participant ID</th>
+                                        <th class="p-3">Full Name</th>
+                                        <th class="p-3">Sitio / Purok</th>
+                                        <th class="p-3">Registered Program</th>
+                                        <th class="p-3">Attendance</th>
+                                        <th class="p-3">Remarks</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="reportTableBody" class="divide-y divide-slate-100">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="tab-settings" class="tab-content space-y-6 hidden">
+                    <div>
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-brand-blue">System Preferences</span>
+                        <h1 class="text-2xl font-bold text-slate-900">Settings</h1>
+                        <p class="text-xs text-slate-500">Update system and barangay profile information.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-1 h-fit">
+                            <button class="w-full text-left px-3 py-2 text-xs font-semibold text-brand-blue bg-blue-50 rounded-lg">General Information</button>
+                            <button onclick="alert('User accounts view.')" class="w-full text-left px-3 py-2 text-xs font-medium text-slate-600 hover:bg-slate-50 rounded-lg">User Account</button>
+                            <button onclick="alert('Notification preferences.')" class="w-full text-left px-3 py-2 text-xs font-medium text-slate-600 hover:bg-slate-50 rounded-lg">Notification</button>
+                        </div>
+
+                        <div class="md:col-span-3 bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-6">
+                            <div>
+                                <h3 class="text-base font-bold text-slate-900">Barangay Information</h3>
+                                <p class="text-xs text-slate-500">Displayed on reports and system documents</p>
+                            </div>
+
+                            <form onsubmit="handleSaveSettings(event)" class="space-y-4">
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-700 mb-1">System Name</label>
+                                    <input type="text" value="Barangay Pinagbuhatan Training and Seminar Management System" class="w-full px-4 py-2.5 rounded-lg border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-brand-blue/30">
+                                </div>
+
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-xs font-semibold text-slate-700 mb-1">Barangay</label>
+                                        <input type="text" value="Pinagbuhatan" class="w-full px-4 py-2.5 rounded-lg border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-brand-blue/30">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-semibold text-slate-700 mb-1">City / Municipality</label>
+                                        <input type="text" value="Pasig City" class="w-full px-4 py-2.5 rounded-lg border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-brand-blue/30">
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-xs font-semibold text-slate-700 mb-1">Contact Number</label>
+                                        <input type="text" value="(02) 8643 0000" class="w-full px-4 py-2.5 rounded-lg border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-brand-blue/30">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-semibold text-slate-700 mb-1">Official Email</label>
+                                        <input type="email" value="pinagbuhatan@example.gov.ph" class="w-full px-4 py-2.5 rounded-lg border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-brand-blue/30">
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-700 mb-1">Office Address</label>
+                                    <textarea rows="3" class="w-full px-4 py-2.5 rounded-lg border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-brand-blue/30">Barangay Hall, Eusebio Avenue, Pinagbuhatan, Pasig City</textarea>
+                                </div>
+
+                                <div class="pt-2 flex justify-end">
+                                    <button type="submit" class="bg-brand-blue hover:bg-brand-blueHover text-white px-6 py-2.5 rounded-lg text-xs font-semibold shadow transition">
+                                        Save Changes
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <div id="addProgramModal" class="fixed inset-0 z-50 hidden bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-lg w-full shadow-xl overflow-hidden animate-in fade-in duration-200">
+            <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
+                <div>
+                    <h3 class="text-base font-bold text-slate-900">Add Training Program</h3>
+                    <p class="text-xs text-slate-500">Enter the schedule and facilitator information below.</p>
+                </div>
+                <button onclick="closeAddProgramModal()" class="text-slate-400 hover:text-slate-600">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <form onsubmit="handleSaveProgram(event)" class="p-6 space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Program Title</label>
+                    <input type="text" id="newProgramTitle" required placeholder="e.g. Community Disaster Preparedness" class="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-brand-blue">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Description</label>
+                    <textarea id="newProgramDesc" rows="3" placeholder="Brief outline of seminar goals..." class="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-brand-blue"></textarea>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">Date</label>
+                        <input type="date" id="newProgramDate" required class="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-brand-blue">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">Time</label>
+                        <input type="time" id="newProgramTime" required class="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-brand-blue">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Venue</label>
+                    <input type="text" id="newProgramVenue" required placeholder="e.g. Barangay Hall Multi-Purpose Room" class="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-brand-blue">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Speaker / Trainer</label>
+                    <input type="text" id="newProgramSpeaker" required placeholder="e.g. C/Insp. Ramon Villanueva" class="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-brand-blue">
+                </div>
+
+                <div class="pt-4 flex items-center justify-end space-x-3 border-t border-slate-100">
+                    <button type="button" onclick="closeAddProgramModal()" class="px-4 py-2 border border-slate-200 text-slate-600 rounded-lg text-xs font-medium hover:bg-slate-50">
+                        Cancel
+                    </button>
+                    <button type="submit" class="bg-brand-blue hover:bg-brand-blueHover text-white px-5 py-2 rounded-lg text-xs font-medium shadow">
+                        Save Program
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Sample data used by the system
+        var programs = [
+            {id:"TRN-001", title:"Disaster Preparedness and Emergency Response", desc:"Community readiness, warning systems, and emergency response.", date:"Apr 18, 2026", time:"8:30 AM", venue:"Barangay Hall Multi-Purpose Room", speaker:"C/Insp. Ramon Villanueva", status:"Upcoming"},
+            {id:"TRN-002", title:"First Aid and Basic Life Support", desc:"Practical first aid and basic life support orientation.", date:"Apr 24, 2026", time:"9:00 AM", venue:"Pinagbuhatan Health Center", speaker:"Nurse Angela Reyes, RN", status:"Upcoming"},
+            {id:"TRN-003", title:"Fire Safety and Prevention", desc:"Household fire prevention and proper extinguisher use.", date:"May 2, 2026", time:"1:00 PM", venue:"San Sebastian Covered Court", speaker:"FO2 Mark Dela Cruz", status:"Upcoming"},
+            {id:"TRN-004", title:"Earthquake Preparedness and Evacuation Drill", desc:"Earthquake safety and community evacuation process.", date:"Mar 21, 2026", time:"8:00 AM", venue:"Barangay Hall Grounds", speaker:"CDRRMO Pasig Team", status:"Completed"},
+            {id:"TRN-005", title:"Livelihood and Entrepreneurship", desc:"Starter guidance for micro-business and livelihood.", date:"May 9, 2026", time:"9:00 AM", venue:"Kalawaan–Pinagbuhatan Hall", speaker:"Ms. Liza Mendoza", status:"Upcoming"},
+            {id:"TRN-006", title:"Health and Nutrition Seminar", desc:"Family nutrition, wellness, and preventive care.", date:"Mar 28, 2026", time:"2:00 PM", venue:"Pinagbuhatan Health Center", speaker:"Dr. Nina Santos", status:"Upcoming"},
+            {id:"TRN-007", title:"Environmental Awareness and Waste Segregation", desc:"Responsible waste segregation and environmental protection.", date:"May 16, 2026", time:"8:30 AM", venue:"Nagpayong Covered Court", speaker:"Engr. Carlo Garcia", status:"Upcoming"}
+        ];
+
+        var residents = [
+            {id:"RES-1001", name:"Maria Luisa Santos", purok:"Nagpayong", age:"26–35", gender:"Female", phone:"0917 555 0182", programId:"TRN-001", programName:"Disaster Preparedness and Emergency Response", attendance:"Present"},
+            {id:"RES-1002", name:"Jose Miguel Reyes", purok:"Villa Cuana", age:"36–45", gender:"Male", phone:"0918 243 6791", programId:"TRN-001", programName:"Disaster Preparedness and Emergency Response", attendance:"Present"},
+            {id:"RES-1003", name:"Ana Mae Dela Cruz", purok:"Greenwoods", age:"18–25", gender:"Female", phone:"0927 401 8356", programId:"TRN-002", programName:"First Aid and Basic Life Support", attendance:"Unmarked"},
+            {id:"RES-1004", name:"Roberto Garcia", purok:"Kaalinsabay", age:"46–59", gender:"Male", phone:"0916 888 4203", programId:"TRN-003", programName:"Fire Safety and Prevention", attendance:"Absent"},
+            {id:"RES-1005", name:"Lorna Bautista", purok:"Napico", age:"36–45", gender:"Female", phone:"0917 555 0182", programId:"TRN-004", programName:"Earthquake Preparedness and Evacuation Drill", attendance:"Present"},
+            {id:"RES-1006", name:"Paolo Mendoza", purok:"Centennial 2", age:"26–35", gender:"Male", phone:"0917 555 0182", programId:"TRN-005", programName:"Livelihood and Entrepreneurship", attendance:"Present"}
+        ];
+
+        // Start the system after the page loads
+        window.onload = function () {
+            renderUpcomingTable();
+            renderProgramsTable();
+            renderResidentsTable();
+            populateProgramSelects();
+            updateAttendanceView();
+            generateReport();
+        };
+
+        function handleLogin(event) {
+            event.preventDefault();
+            document.getElementById("loginView").classList.add("hidden");
+            document.getElementById("mainApp").classList.remove("hidden");
+        }
+
+        function handleLogout() {
+            document.getElementById("mainApp").classList.add("hidden");
+            document.getElementById("loginView").classList.remove("hidden");
+        }
+
+        function switchTab(tab) {
+            var pages = document.getElementsByClassName("tab-content");
+            var buttons = document.getElementsByClassName("nav-btn");
+            var i;
+            for (i = 0; i < pages.length; i++) pages[i].classList.add("hidden");
+            document.getElementById("tab-" + tab).classList.remove("hidden");
+            for (i = 0; i < buttons.length; i++) {
+                buttons[i].classList.remove("bg-brand-blue", "text-white");
+                buttons[i].classList.add("text-slate-400", "hover:bg-brand-sidebarHover", "hover:text-white");
+            }
+            var active = document.getElementById("nav-" + tab);
+            if (active) {
+                active.classList.add("bg-brand-blue", "text-white");
+                active.classList.remove("text-slate-400", "hover:bg-brand-sidebarHover", "hover:text-white");
+            }
+            var titles = {dashboard:"Dashboard", programs:"Training Programs", residents:"Residents / Participants", attendance:"Attendance Tracking", reports:"Reports & Documents", settings:"System Preferences"};
+            document.getElementById("headerPageTitle").innerText = titles[tab];
+        }
+
+        function renderUpcomingTable() {
+            var table = document.getElementById("dashUpcomingTable");
+            var output = "";
+            var count = 0;
+            for (var i = 0; i < programs.length; i++) {
+                var p = programs[i];
+                if (p.status === "Upcoming" && count < 4) {
+                    output += "<tr class='hover:bg-slate-50'><td class='p-3'><b>" + p.title + "</b><div class='text-slate-400'>" + p.id + "</div></td>";
+                    output += "<td class='p-3'>" + p.date + "<div class='text-slate-400'>" + p.time + "</div></td><td class='p-3'>" + p.venue + "</td>";
+                    output += "<td class='p-3 text-right'><span class='rounded-full bg-sky-100 text-sky-700 px-2 py-1'>Upcoming</span></td></tr>";
+                    count++;
+                }
+            }
+            table.innerHTML = output;
+            document.getElementById("dashTotalPrograms").innerText = programs.length;
+            document.getElementById("dashTotalResidents").innerText = residents.length;
+            var upcomingCount = 0;
+            for (var j = 0; j < programs.length; j++) if (programs[j].status === "Upcoming") upcomingCount++;
+            document.getElementById("dashUpcomingSessions").innerText = upcomingCount;
+        }
+
+        function renderProgramsTable() {
+            var search = document.getElementById("searchProgramInput").value.toLowerCase();
+            var table = document.getElementById("programsTableBody");
+            var output = "";
+            var count = 0;
+            for (var i = 0; i < programs.length; i++) {
+                var p = programs[i];
+                var text = (p.title + " " + p.speaker + " " + p.venue + " " + p.id).toLowerCase();
+                if (text.indexOf(search) !== -1) {
+                    var statusClass = p.status === "Upcoming" ? "bg-sky-100 text-sky-700" : "bg-emerald-100 text-emerald-700";
+                    output += "<tr class='hover:bg-slate-50'><td class='p-3'>" + p.id + "</td><td class='p-3'><b>" + p.title + "</b><div class='text-slate-400'>" + p.desc + "</div></td>";
+                    output += "<td class='p-3'>" + p.date + "<div class='text-slate-400'>" + p.time + "</div></td><td class='p-3'>" + p.venue + "</td><td class='p-3'>" + p.speaker + "</td>";
+                    output += "<td class='p-3'><span class='rounded-full px-2 py-1 " + statusClass + "'>" + p.status + "</span></td>";
+                    output += "<td class='p-3 text-center'><button onclick='alert(\"Program details\")' class='text-blue-500 mr-2'><i class='fa-regular fa-eye'></i></button><button onclick='alert(\"Editing is not available in this basic version.\")' class='text-amber-500 mr-2'><i class='fa-regular fa-pen-to-square'></i></button><button onclick='deleteProgram(\"" + p.id + "\")' class='text-red-500'><i class='fa-regular fa-trash-can'></i></button></td></tr>";
+                    count++;
+                }
+            }
+            table.innerHTML = output;
+            document.getElementById("programsCountLabel").innerText = "Showing " + count + " of " + programs.length + " sample records";
+        }
+
+        function openAddProgramModal() { document.getElementById("addProgramModal").classList.remove("hidden"); }
+        function closeAddProgramModal() { document.getElementById("addProgramModal").classList.add("hidden"); }
+
+        function handleSaveProgram(event) {
+            event.preventDefault();
+            var title = document.getElementById("newProgramTitle").value;
+            var desc = document.getElementById("newProgramDesc").value;
+            var date = document.getElementById("newProgramDate").value;
+            var time = document.getElementById("newProgramTime").value;
+            var venue = document.getElementById("newProgramVenue").value;
+            var speaker = document.getElementById("newProgramSpeaker").value;
+            var number = programs.length + 1;
+            var id = "TRN-" + (number < 10 ? "00" : "0") + number;
+            var niceDate = date;
+            if (date) niceDate = new Date(date + "T00:00:00").toLocaleDateString("en-US", {month:"short", day:"numeric", year:"numeric"});
+            programs.push({id:id, title:title, desc:desc || "Community seminar program", date:niceDate, time:time, venue:venue, speaker:speaker, status:"Upcoming"});
+            document.getElementById("addProgramModal").querySelector("form").reset();
+            closeAddProgramModal();
+            renderUpcomingTable(); renderProgramsTable(); populateProgramSelects(); updateAttendanceView(); generateReport();
+            alert("Training program added!");
+        }
+
+        function deleteProgram(id) {
+            if (confirm("Delete program " + id + "?")) {
+                var newPrograms = [];
+                for (var i = 0; i < programs.length; i++) if (programs[i].id !== id) newPrograms.push(programs[i]);
+                programs = newPrograms;
+                renderProgramsTable(); renderUpcomingTable(); populateProgramSelects(); updateAttendanceView(); generateReport();
+            }
+        }
+
+        function renderResidentsTable() {
+            var search = document.getElementById("searchResidentInput").value.toLowerCase();
+            var table = document.getElementById("residentsTableBody");
+            var output = "";
+            var count = 0;
+            for (var i = 0; i < residents.length; i++) {
+                var r = residents[i];
+                var text = (r.name + " " + r.id + " " + r.purok + " " + r.programName).toLowerCase();
+                if (text.indexOf(search) !== -1) {
+                    output += "<tr class='hover:bg-slate-50'><td class='p-3'>" + r.id + "</td><td class='p-3 font-bold'>" + r.name + "</td><td class='p-3'>" + r.purok + "</td><td class='p-3'>" + r.age + "</td><td class='p-3'>" + r.gender + "</td><td class='p-3'>" + r.phone + "</td><td class='p-3'>" + r.programName + "</td>";
+                    output += "<td class='p-3 text-center'><button onclick='alert(\"Participant details\")' class='text-blue-500 mr-2'><i class='fa-regular fa-eye'></i></button><button onclick='alert(\"Editing is not available in this basic version.\")' class='text-amber-500 mr-2'><i class='fa-regular fa-pen-to-square'></i></button><button onclick='deleteResident(\"" + r.id + "\")' class='text-red-500'><i class='fa-regular fa-trash-can'></i></button></td></tr>";
+                    count++;
+                }
+            }
+            table.innerHTML = output;
+            document.getElementById("residentsCountLabel").innerText = "Showing " + count + " of " + residents.length + " sample records";
+        }
+
+        function deleteResident(id) {
+            if (confirm("Delete participant " + id + "?")) {
+                var newResidents = [];
+                for (var i = 0; i < residents.length; i++) if (residents[i].id !== id) newResidents.push(residents[i]);
+                residents = newResidents;
+                renderResidentsTable(); updateAttendanceView(); generateReport(); renderUpcomingTable();
+            }
+        }
+
+        function populateProgramSelects() {
+            var attendanceSelect = document.getElementById("attendanceProgramSelect");
+            var reportSelect = document.getElementById("reportProgramSelect");
+            var oldAttendance = attendanceSelect.value;
+            var oldReport = reportSelect.value;
+            var options = "";
+            for (var i = 0; i < programs.length; i++) options += "<option value='" + programs[i].id + "'>" + programs[i].title + "</option>";
+            attendanceSelect.innerHTML = options;
+            reportSelect.innerHTML = "<option value='ALL'>All Training Programs</option>" + options;
+            if (oldAttendance) attendanceSelect.value = oldAttendance;
+            if (oldReport) reportSelect.value = oldReport;
+        }
+
+        function updateAttendanceView() {
+            var selectedId = document.getElementById("attendanceProgramSelect").value;
+            var program = null;
+            for (var i = 0; i < programs.length; i++) if (programs[i].id === selectedId) program = programs[i];
+            if (program) {
+                document.getElementById("attProgramDate").innerText = program.date + " • " + program.time;
+                document.getElementById("attProgramVenue").innerText = program.venue;
+            }
+            var search = document.getElementById("searchAttInput").value.toLowerCase();
+            var list = [];
+            for (var j = 0; j < residents.length; j++) {
+                var r = residents[j];
+                if (r.programId === selectedId && (r.name + " " + r.id + " " + r.purok).toLowerCase().indexOf(search) !== -1) list.push(r);
+            }
+            var present = 0, absent = 0, output = "";
+            for (var k = 0; k < list.length; k++) {
+                var person = list[k];
+                if (person.attendance === "Present") present++;
+                if (person.attendance === "Absent") absent++;
+                var labelClass = person.attendance === "Present" ? "bg-emerald-100 text-emerald-700" : (person.attendance === "Absent" ? "bg-red-100 text-red-700" : "bg-sky-100 text-sky-700");
+                output += "<tr><td class='p-3'><b>" + person.name + "</b><div class='text-slate-400'>" + person.id + "</div></td><td class='p-3'>" + person.purok + "</td><td class='p-3'>" + person.phone + "</td>";
+                output += "<td class='p-3'><span class='rounded-full px-2 py-1 " + labelClass + "'>" + person.attendance + "</span></td>";
+                output += "<td class='p-3 text-center'><button onclick='toggleAttendance(\"" + person.id + "\",\"Present\")' class='rounded bg-emerald-600 text-white px-3 py-1 mr-1'>Present</button><button onclick='toggleAttendance(\"" + person.id + "\",\"Absent\")' class='rounded border border-red-200 text-red-600 px-3 py-1'>Absent</button></td></tr>";
+            }
+            document.getElementById("attendanceTableBody").innerHTML = output;
+            document.getElementById("attTotalCount").innerText = list.length;
+            document.getElementById("attPresentCount").innerText = present;
+            document.getElementById("attAbsentCount").innerText = absent;
+            document.getElementById("attRate").innerText = (list.length ? Math.round(present / list.length * 100) : 0) + "%";
+            document.getElementById("attRegisteredSub").innerText = list.length + " registered residents";
+        }
+
+        function toggleAttendance(id, status) {
+            for (var i = 0; i < residents.length; i++) if (residents[i].id === id) residents[i].attendance = status;
+            updateAttendanceView(); generateReport();
+        }
+
+        function generateReport() {
+            var selectedId = document.getElementById("reportProgramSelect").value || "ALL";
+            var output = "", count = 0;
+            for (var i = 0; i < residents.length; i++) {
+                var r = residents[i];
+                if (selectedId === "ALL" || r.programId === selectedId) {
+                    output += "<tr><td class='p-3'>" + r.id + "</td><td class='p-3 font-bold'>" + r.name + "</td><td class='p-3'>" + r.purok + "</td><td class='p-3'>" + r.programName + "</td><td class='p-3'>" + r.attendance + "</td><td class='p-3'>" + (r.attendance === "Present" ? "Completed" : "Pending") + "</td></tr>";
+                    count++;
+                }
+            }
+            document.getElementById("reportTableBody").innerHTML = output;
+            document.getElementById("reportRecordCount").innerText = count + " Records";
+            if (selectedId === "ALL") document.getElementById("reportTitle").innerText = "Training Program Participant List";
+            else {
+                for (var j = 0; j < programs.length; j++) if (programs[j].id === selectedId) document.getElementById("reportTitle").innerText = programs[j].title + " - Attendance Report";
+            }
+        }
+
+        function exportCSV() {
+            var csv = "ID,Name,Purok,Program,Attendance\n";
+            for (var i = 0; i < residents.length; i++) {
+                var r = residents[i];
+                csv += r.id + ',"' + r.name + '","' + r.purok + '","' + r.programName + '",' + r.attendance + "\n";
+            }
+            var file = new Blob([csv], {type:"text/csv"});
+            var link = document.createElement("a");
+            link.href = URL.createObjectURL(file);
+            link.download = "Barangay_Pinagbuhatan_Training_Report.csv";
+            link.click();
+        }
+
+        function handleSaveSettings(event) {
+            event.preventDefault();
+            alert("Settings updated successfully!");
+        }
+    </script>
+</body>
+</html>
